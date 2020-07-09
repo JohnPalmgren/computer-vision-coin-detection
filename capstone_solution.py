@@ -49,6 +49,17 @@ def find_50p(img):
     return fifty, count
 
 
+def get_centre(contours):
+    """returns co-ordinates for centre of polygon"""
+
+    for cnt in contours:
+            peri = cv2.arcLength(cnt, True)
+            approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+            x , y , w, h = cv2.boundingRect(approx)
+
+    return (x+w//2,y+h//2)
+
+
 def draw_50p(contours, image):
     """Draw contours around 50p in image
     
@@ -56,9 +67,11 @@ def draw_50p(contours, image):
     image: image on which to draw contours
     """
 
+    centre = get_centre(contours)
+
     for cnt in contours:
         cv2.drawContours(image, cnt, -1, (255, 0, 0), 4)
-        cv2.putText(image, "50",  (835,393), cv2.FONT_HERSHEY_SIMPLEX, 2, #get position from coords
+        cv2.putText(image, "50",  (centre), cv2.FONT_HERSHEY_SIMPLEX, 2, #get position from coords
                     (0, 0, 0), 2)
 
 
