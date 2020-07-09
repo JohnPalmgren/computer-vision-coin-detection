@@ -1,5 +1,5 @@
 import cv2
-import capstone_solution as cs
+import coins_solution as cs
 
 if __name__ == '__main__':
 
