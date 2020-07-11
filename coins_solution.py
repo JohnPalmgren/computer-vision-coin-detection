@@ -4,7 +4,7 @@ import cv2
 def find_circles(img):
     """Use HoughCircles to detect circles in image. 
 
-    return co-ordinates of the circle on the image and the size of the radius as an integer value 
+    return co-ordinates of the circle in the image and the size of the radius as an integer value 
     """
 
     circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,0.9,120,param1=50,param2=27,minRadius=60,maxRadius=120)
