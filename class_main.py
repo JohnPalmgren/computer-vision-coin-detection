@@ -5,7 +5,7 @@ import class_solution
 original_image = cv2.imread('coin_picture.png', 1)
 # Create greyscale image and add blur.
 img = cv2.imread('coin_picture.png', cv2.IMREAD_GRAYSCALE)
-img = cv2.GaussianBlur(img, (5,5), 0)
+img = cv2.GaussianBlur(img, (5, 5), 0)
 
 circle = class_solution.Circles(img)
 

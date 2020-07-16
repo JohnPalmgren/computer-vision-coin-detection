@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+
   
 def find_circles(img):
     """Use HoughCircles to detect circles in image. 
@@ -16,13 +17,12 @@ def draw_circles(circles,image):
     circles: list containing xy co-ordinates and the size of radius.
     image: image on which to draw circles.
     """
-    count = 1
-    for i in (circles[0]):
+
+    for i in circles[0]:
     
         # Draw the outer circle. 
         cv2.circle(image, (i[0],i[1]), i[2], (255,0,0), 4)
 
-        count+=1
 
 def find_50p(img):
     """Detect contours and area of shapes in the image and filters to detect 50p.
@@ -91,7 +91,7 @@ def get_brightness(img, circles, size):
     """Mesure average number of pixle in a small sample area of the circle.
     
     img: image
-    circles: interger values of co-ordinates of the circles in the image
+    circles: numpy array of co-ordinates of the circles in the image
     size: size of the sample area in which to take the avarage pixle value
 
     returns a list corresponding to the circles in the image, representing the brightness of each circle 

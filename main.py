@@ -28,3 +28,4 @@ if __name__ == '__main__':
     cs.add_results_to_image(coin_values, fifty_coins_value, circles, original_image)
 
     cs.show_image(original_image)
+
