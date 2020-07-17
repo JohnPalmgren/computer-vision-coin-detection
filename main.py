@@ -1,31 +1,27 @@
 import cv2
-import coins_solution as cs
+import coin_solution
 
 if __name__ == '__main__':
 
-    #Create original colour image.
-    original_image = cv2.imread('coin_picture.png', 1)
-    # Create greyscale image and add blur.
-    img = cv2.imread('coin_picture.png', cv2.IMREAD_GRAYSCALE)
-    img = cv2.GaussianBlur(img, (5,5), 0)
+    filename = 'coin_picture.png'
+    original_image = cv2.imread(filename, 1)
+    img = coin_solution.process_image(filename)
 
-    circles = cs.find_circles(img)
+    circle = coin_solution.Circles(img)
 
-    radii = cs.get_radius(circles)
+    poly = coin_solution.Polygon(img)
 
-    bright_values = cs.get_brightness(img,circles,20)
+    values = coin_solution.GetCoinValues(img)
 
-    fifty_contours = cs.find_50p(img)[0] # Contours of 50p coins
+    circle.draw_circles(original_image)
 
-    fifty_coins_value = cs.find_50p(img)[1]*50 # Value of of 50p coins in image. 
+    poly.draw_polygons(original_image)
 
-    coin_values = cs.sort_coins(radii, bright_values)
+    coin_solution.add_results_to_image(
+        values.circle_coin_values(circle.get_radius(),
+        circle.get_brightness(20)), values.non_circle_values
+        (poly.find_polygons()), poly.get_centre(), circle.find_circles(), 
+        original_image
+        )
 
-    cs.draw_circles(circles, original_image)
-
-    cs.draw_50p(fifty_contours, original_image)
-
-    cs.add_results_to_image(coin_values, fifty_coins_value, circles, original_image)
-
-    cs.show_image(original_image)
-
+    coin_solution.show_image(original_image)
