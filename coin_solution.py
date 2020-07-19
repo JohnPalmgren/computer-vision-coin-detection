@@ -6,6 +6,7 @@ class Circles():
 
     def  __init__(self, img):
         self.img = img
+        self.circle_values = self.find_circles()
 
     def find_circles(self):
         """Use HoughCircles to detect circles in image. 
@@ -20,7 +21,7 @@ class Circles():
     def get_radius(self):
         """Return a list of radius values"""
 
-        return [coords[2] for coords in self.find_circles()[0,:]]
+        return [coords[2] for coords in self.circle_values[0,:]]
 
     def get_brightness(self, size):
         """Mesure average number of pixle in a sample area of the circle.
@@ -30,8 +31,7 @@ class Circles():
         """
 
         av_value = []
-        for coords in self.find_circles()[0,:]:
-            # Get average no of pixles (brightness).
+        for coords in self.circle_values[0,:]:
             av_brightness = np.mean(self.img [coords[1]-size : coords[1] 
                                     +size, coords[0]-size : coords[0] 
                                     +size])
@@ -44,7 +44,7 @@ class Circles():
         image: image on which to draw circles.
         """
 
-        for i in self.find_circles()[0]:
+        for i in self.circle_values[0]:
             cv2.circle(image, (i[0], i[1]), i[2], (255 ,0, 0), 4)
 
 
@@ -53,6 +53,7 @@ class Polygon():
 
     def __init__(self, img):
         self.img = img
+        self.polygon_values = self.find_polygons()
 
     def find_polygons(self):
         """Detect contours and area of shapes and filters by area."""
@@ -74,7 +75,7 @@ class Polygon():
     def get_centre(self):
         """Returns co-ordinates for centre of polygons in image."""
 
-        for cnt in self.find_polygons():
+        for cnt in self.polygon_values:
             peri = cv2.arcLength(cnt, True)
             approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
             x, y, w, h = cv2.boundingRect(approx)
@@ -83,7 +84,7 @@ class Polygon():
     def draw_polygons(self, image):
         """Draw contours around polygon in image."""
 
-        for cnt in self.find_polygons():
+        for cnt in self.polygon_values:
             cv2.drawContours(image, cnt, -1, (255, 0, 0), 4)
 
            
